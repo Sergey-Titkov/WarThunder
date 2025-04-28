@@ -30,9 +30,9 @@ EARTH_RADIUS_KM  = 6378.137
 REQUEST_TIMEOUT  = 0.1
 
 os.makedirs(LOCAL_PATH, exist_ok=True)
-    '''
-    It is necessary to explicitly create a directory for temporary files; this is required if the program is packaged with PyInstaller.
-    '''
+"""
+It is necessary to explicitly create a directory for temporary files; this is required if the program is packaged with PyInstaller.
+"""
 
 
 def hypotenuse(a: float, b: float) -> float:
