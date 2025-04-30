@@ -100,21 +100,6 @@ class TelemInterface(object):
         events_response = requests.get(URL_EVENTS.format(IP_ADDRESS, self.last_event_ID)).json()
         if events_mode == EVENTS_ALL:
             self.events.update(events_response)
-        :param events_mode:
-                - EVENTS_ALL    - Cumulative mode: returns a dictionary containing all events since War Thunder was launched.
-                - EVENTS_CHUNK - Returns only events that occurred since the last data request.
-                                   In this case, the array includes an additional `current_time` attribute containing the time of the request to WT.
-        :return: Events log dictionary
-        """
-        events_response = requests.get(URL_EVENTS.format(IP_ADDRESS, self.last_event_ID)).json()
-        if events_mode == EVENTS_ALL:
-            self.events.update(events_response)
-
-        if events_mode == EVENTS_CHUNK:
-            current_time = fr'{datetime.now().hour:02.0f}:{datetime.now().minute:02.0f}:{datetime.now().second:02.0f}'
-            for event in events_response['damage']:
-                event['current_time'] = current_time
-            self.events = events_response
 
         if events_mode == EVENTS_CHUNK:
             current_time = fr'{datetime.now().hour:02.0f}:{datetime.now().minute:02.0f}:{datetime.now().second:02.0f}'
@@ -123,8 +108,6 @@ class TelemInterface(object):
             self.events = events_response
         try:
             if len(self.events['damage'])>0:
-            if len(self.events['damage'])>0:
-                self.last_event_ID = max([event['id'] for event in self.events['damage']])
                 self.last_event_ID = max([event['id'] for event in self.events['damage']])
         except ValueError:
             self.last_event_ID = -1
